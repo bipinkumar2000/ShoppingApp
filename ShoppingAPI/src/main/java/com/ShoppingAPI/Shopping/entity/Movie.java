@@ -1,5 +1,6 @@
 package com.ShoppingAPI.Shopping.entity;
 
+import java.sql.Date;
 import java.util.Objects;
 
 import javax.persistence.Entity;
@@ -15,68 +16,48 @@ public class Movie {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
-	private long id;
-	private String name;
-	private float price;
-	private String language;
-	private int rating;
+	private long movieId;
+	private String title;
+	private Date releaseDate;
 
 	public Movie() {
 		super();
 	}
 
-	public Movie(long id, String name, float price, String language, int rating) {
+	public Movie(long movieId, String title, Date releaseDate) {
 		super();
-		this.id = id;
-		this.name = name;
-		this.price = price;
-		this.language = language;
-		this.rating = rating;
+		this.movieId = movieId;
+		this.title = title;
+		this.releaseDate = releaseDate;
 	}
 
-	public long getId() {
-		return id;
+	public long getMovieId() {
+		return movieId;
 	}
 
-	public void setId(long id) {
-		this.id = id;
+	public void setMovieId(long movieId) {
+		this.movieId = movieId;
 	}
 
-	public String getName() {
-		return name;
+	public String getTitle() {
+		return title;
 	}
 
-	public void setName(String name) {
-		this.name = name;
+	public void setTitle(String title) {
+		this.title = title;
 	}
 
-	public float getPrice() {
-		return price;
+	public Date getReleaseDate() {
+		return releaseDate;
 	}
 
-	public void setPrice(float price) {
-		this.price = price;
-	}
-
-	public String getLanguage() {
-		return language;
-	}
-
-	public void setLanguage(String language) {
-		this.language = language;
-	}
-
-	public int getRating() {
-		return rating;
-	}
-
-	public void setRating(int rating) {
-		this.rating = rating;
+	public void setReleaseDate(Date releaseDate) {
+		this.releaseDate = releaseDate;
 	}
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(id, language, name, price, rating);
+		return Objects.hash(movieId, releaseDate, title);
 	}
 
 	@Override
@@ -88,8 +69,8 @@ public class Movie {
 		if (getClass() != obj.getClass())
 			return false;
 		Movie other = (Movie) obj;
-		return id == other.id && Objects.equals(language, other.language) && Objects.equals(name, other.name)
-				&& Float.floatToIntBits(price) == Float.floatToIntBits(other.price) && rating == other.rating;
+		return movieId == other.movieId && Objects.equals(releaseDate, other.releaseDate)
+				&& Objects.equals(title, other.title);
 	}
 
 }
