@@ -16,7 +16,7 @@ import com.ShoppingAPI.Shopping.entity.Movie;
 import com.ShoppingAPI.Shopping.service.MovieService;
 
 @CrossOrigin(origins="http://localhost:4200")
-@RequestMapping("/api/movieshopping")
+@RequestMapping("/api/movie")
 @RestController
 public class MovieController {
 	

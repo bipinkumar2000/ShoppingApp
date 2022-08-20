@@ -18,25 +18,23 @@ public class Booking {
 	private String movieTitle;
 	private int noOfPersons;
 	private long userId;
+	private String showCycle;
 
 	public Booking() {
 		super();
 	}
 
-	public Booking(long bookingId, String movieTitle, int noOfPersons, long userId) {
+	public Booking(long bookingId, String movieTitle, int noOfPersons, long userId, String showCycle) {
 		super();
 		this.bookingId = bookingId;
 		this.movieTitle = movieTitle;
 		this.noOfPersons = noOfPersons;
 		this.userId = userId;
+		this.showCycle = showCycle;
 	}
 
 	public long getBookingId() {
 		return bookingId;
-	}
-
-	public void setBookingId(long bookingId) {
-		this.bookingId = bookingId;
 	}
 
 	public String getMovieTitle() {
@@ -59,13 +57,17 @@ public class Booking {
 		return userId;
 	}
 
-	public void setUserId(long userId) {
-		this.userId = userId;
+	public String getShowCycle() {
+		return showCycle;
+	}
+
+	public void setShowCycle(String showCycle) {
+		this.showCycle = showCycle;
 	}
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(bookingId, movieTitle, noOfPersons, userId);
+		return Objects.hash(bookingId, movieTitle, noOfPersons, showCycle, userId);
 	}
 
 	@Override
@@ -78,7 +80,8 @@ public class Booking {
 			return false;
 		Booking other = (Booking) obj;
 		return bookingId == other.bookingId && Objects.equals(movieTitle, other.movieTitle)
-				&& noOfPersons == other.noOfPersons && userId == other.userId;
+				&& noOfPersons == other.noOfPersons && Objects.equals(showCycle, other.showCycle)
+				&& userId == other.userId;
 	}
 
 }
