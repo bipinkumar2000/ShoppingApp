@@ -60,7 +60,7 @@ public class MovieServiceImpl implements MovieService{
 
 	@Override
 	public ResponseEntity<Boolean> updateMovie(Movie _movie) {
-		Optional<Movie> movie=moviesDao.findById(_movie.getId());
+		Optional<Movie> movie=moviesDao.findById(_movie.getMovieId());
 		if(movie!=null) {
 			try {
 				moviesDao.save(_movie);
