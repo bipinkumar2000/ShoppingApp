@@ -12,7 +12,7 @@ public interface BookingService {
 	
 	public ResponseEntity<Boolean> addBooking(Booking booking);
 	public ResponseEntity<List<Booking>> getBookings(long userId);
-	public ResponseEntity<Boolean> deleteBooking(long id);
+	public ResponseEntity<Boolean> deleteBooking(long bookingId);
 	public ResponseEntity<Boolean> updateBooking(Booking booking);
 	
 

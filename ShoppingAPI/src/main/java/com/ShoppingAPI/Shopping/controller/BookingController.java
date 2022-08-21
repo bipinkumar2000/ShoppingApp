@@ -34,8 +34,8 @@ public class BookingController {
 	public ResponseEntity<Boolean> updateBooking(@RequestBody Booking booking){
 		return bookingService.updateBooking(booking);
 	}
-	@RequestMapping(value="/{id}",method=RequestMethod.DELETE)
-	public ResponseEntity<Boolean> deleteBooking(@PathVariable long id){
-		return bookingService.deleteBooking(id);
+	@RequestMapping(value="/{bookingId}",method=RequestMethod.DELETE)
+	public ResponseEntity<Boolean> deleteBooking(@PathVariable long bookingId){
+		return bookingService.deleteBooking(bookingId);
 	}
 }

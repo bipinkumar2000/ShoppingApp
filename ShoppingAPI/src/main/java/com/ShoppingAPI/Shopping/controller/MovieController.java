@@ -28,9 +28,9 @@ public class MovieController {
 		return movieservice.getMovies();
 	}
 	
-	@RequestMapping(value="/{id}",method=RequestMethod.GET)
-	public ResponseEntity<Optional<Movie>> getMovie(@PathVariable long id){
-		return movieservice.getMovie(id);
+	@RequestMapping(value="/{movieId}",method=RequestMethod.GET)
+	public ResponseEntity<Optional<Movie>> getMovie(@PathVariable long movieId){
+		return movieservice.getMovie(movieId);
 	}
 	
 	@RequestMapping(method=RequestMethod.POST)
@@ -44,8 +44,8 @@ public class MovieController {
 		return movieservice.updateMovie(movie);
 	}
 	
-	@RequestMapping(value="/{id}",method=RequestMethod.DELETE)
-	public ResponseEntity<Boolean> deleteMovie(@PathVariable long id){
-		return movieservice.deleteMovie(id);
+	@RequestMapping(value="/{movieId}",method=RequestMethod.DELETE)
+	public ResponseEntity<Boolean> deleteMovie(@PathVariable long movieId){
+		return movieservice.deleteMovie(movieId);
 	}	
 }

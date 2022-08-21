@@ -3,21 +3,28 @@ package com.ShoppingAPI.Shopping.service.BookingServiceImplementation;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.CachePut;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.ShoppingAPI.Shopping.dao.BookingDao;
 import com.ShoppingAPI.Shopping.entity.Booking;
 import com.ShoppingAPI.Shopping.service.BookingService;
 
 @Service
+@Transactional(propagation = Propagation.SUPPORTS, readOnly=true)
 public class BookingServiceImpl implements BookingService {
 	
 	@Autowired
 	private BookingDao bookingDao;
 
 	@Override
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly=false)
 	public ResponseEntity<Boolean> addBooking(Booking booking) {
 		if(booking!=null) {
 			try {
@@ -34,6 +41,8 @@ public class BookingServiceImpl implements BookingService {
 	}
 
 	@Override
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly=false)
+	@Cacheable(value="moviesbooking",key="#userId")
 	public ResponseEntity<List<Booking>> getBookings(long userId) {
 		if(userId>0) {
 			var booking = bookingDao.findAll(userId);
@@ -48,12 +57,14 @@ public class BookingServiceImpl implements BookingService {
 	}
 
 	@Override
-	public ResponseEntity<Boolean> deleteBooking(long id) {
-		if(id>0) {
-			var booking =  bookingDao.findById(id);
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly=false)
+	@CacheEvict(value="moviesbooking",key="#bookingId")
+	public ResponseEntity<Boolean> deleteBooking(long bookingId) {
+		if(bookingId>0) {
+			var booking =  bookingDao.findById(bookingId);
 			if(booking!=null) {
 				try {
-					bookingDao.deleteById(id);;
+					bookingDao.deleteById(bookingId);
 					return new ResponseEntity<Boolean>(true,HttpStatus.OK);
 				}
 				catch(Exception e) {
@@ -70,6 +81,8 @@ public class BookingServiceImpl implements BookingService {
 	}
 
 	@Override
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly=true)
+	@CachePut(value="moviesbooking",key="#booking.bookingId")
 	public ResponseEntity<Boolean> updateBooking(Booking booking) {
 		if(booking!=null) {
 			var id = booking.getUserId();
