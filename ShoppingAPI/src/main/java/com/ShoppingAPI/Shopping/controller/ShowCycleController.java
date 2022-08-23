@@ -15,7 +15,7 @@ import com.ShoppingAPI.Shopping.entity.ShowCycle;
 import com.ShoppingAPI.Shopping.service.ShowCycleService;
 
 @CrossOrigin(origins="http://localhost:4200")
-@RequestMapping("/api/movie/showcycle")
+@RequestMapping("/api/user/movie/showcycle")
 @RestController
 public class ShowCycleController {
 	

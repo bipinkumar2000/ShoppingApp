@@ -15,7 +15,7 @@ import com.ShoppingAPI.Shopping.entity.Booking;
 import com.ShoppingAPI.Shopping.service.BookingService;
 
 @CrossOrigin(origins="http://localhost:4200")
-@RequestMapping("/api/movie/booking")
+@RequestMapping("/api/user/movie/booking")
 @RestController
 public class BookingController {
 	

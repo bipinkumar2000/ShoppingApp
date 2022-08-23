@@ -48,6 +48,7 @@ public class MovieServiceImpl implements MovieService {
 
 	@Override
 	@Transactional(propagation = Propagation.REQUIRED, readOnly = false)
+	@Cacheable(value="moviesbooking",key="#movie")
 	public ResponseEntity<Boolean> addMovie(Movie movie) {
 		if (movie != null) {
 			try {
