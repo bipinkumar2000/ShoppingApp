@@ -10,7 +10,7 @@ import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.ShoppingAPI.Shopping.dao.UserDao;
-import com.ShoppingAPI.Shopping.entity.User;
+import com.ShoppingAPI.Shopping.entity.UserDetails;
 import com.ShoppingAPI.Shopping.service.UserService;
 
 @Service
@@ -22,7 +22,7 @@ public class UserServiceImpl implements UserService{
 
 	@Override
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly=false)
-	public ResponseEntity<Boolean> addUser(User user) {
+	public ResponseEntity<Boolean> addUser(UserDetails user) {
 		if(user!=null) {
 			userDao.save(user);
 			return new ResponseEntity<Boolean>(true,HttpStatus.OK);
@@ -32,14 +32,14 @@ public class UserServiceImpl implements UserService{
 
 	@Override
 	@Transactional(propagation = Propagation.SUPPORTS)
-	public ResponseEntity<List<User>> getUsers() {
-		List<User> users =  userDao.findAll();
-		return new ResponseEntity<List<User>>(users,HttpStatus.OK);	
+	public ResponseEntity<List<UserDetails>> getUsers() {
+		List<UserDetails> users =  userDao.findAll();
+		return new ResponseEntity<List<UserDetails>>(users,HttpStatus.OK);	
 	}
 
 	@Override
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly=false)
-	public ResponseEntity<Boolean> updateUser(User user) {
+	public ResponseEntity<Boolean> updateUser(UserDetails user) {
 		var id=user.getUserId();
 		var _user=userDao.findById(id);
 		if(_user!=null) {

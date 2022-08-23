@@ -11,7 +11,7 @@ import lombok.Data;
 
 @Entity
 @Data
-public class User {
+public class UserDetails {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
@@ -20,11 +20,11 @@ public class User {
 	private String password;
 	private String role;
 
-	public User() {
+	public UserDetails() {
 		super();
 	}
 
-	public User(long userId, String username, String password, String role) {
+	public UserDetails(long userId, String username, String password, String role) {
 		super();
 		this.userId = userId;
 		this.username = username;
@@ -77,7 +77,7 @@ public class User {
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		User other = (User) obj;
+		UserDetails other = (UserDetails) obj;
 		return Objects.equals(password, other.password) && Objects.equals(role, other.role) && userId == other.userId
 				&& Objects.equals(username, other.username);
 	}
