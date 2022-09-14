@@ -1,14 +1,22 @@
 package com.ShoppingAPI.Shopping.entity;
 
+import java.util.List;
 import java.util.Objects;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToMany;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
+@AllArgsConstructor
+@NoArgsConstructor
 @Entity
 @Data
 public class UserDetails {
@@ -19,17 +27,22 @@ public class UserDetails {
 	private String username;
 	private String password;
 	private String role;
+	
+	@OneToMany(cascade = CascadeType.ALL)
+	@JoinColumn(name="fk_userId",referencedColumnName="userId")
+	private List<Booking> bookings;
 
 	public UserDetails() {
 		super();
 	}
 
-	public UserDetails(long userId, String username, String password, String role) {
+	public UserDetails(long userId, String username, String password, String role, List<Booking> bookings) {
 		super();
 		this.userId = userId;
 		this.username = username;
 		this.password = password;
 		this.role = role;
+		this.bookings = bookings;
 	}
 
 	public long getUserId() {
@@ -64,9 +77,17 @@ public class UserDetails {
 		this.role = role;
 	}
 
+	public List<Booking> getBookings() {
+		return bookings;
+	}
+
+	public void setBookings(List<Booking> bookings) {
+		this.bookings = bookings;
+	}
+
 	@Override
 	public int hashCode() {
-		return Objects.hash(password, role, userId, username);
+		return Objects.hash(bookings, password, role, userId, username);
 	}
 
 	@Override
@@ -78,8 +99,10 @@ public class UserDetails {
 		if (getClass() != obj.getClass())
 			return false;
 		UserDetails other = (UserDetails) obj;
-		return Objects.equals(password, other.password) && Objects.equals(role, other.role) && userId == other.userId
+		return Objects.equals(bookings, other.bookings) && Objects.equals(password, other.password)
+				&& Objects.equals(role, other.role) && userId == other.userId
 				&& Objects.equals(username, other.username);
 	}
 
+	
 }

@@ -1,17 +1,23 @@
 package com.ShoppingAPI.Shopping.entity;
 
 import java.sql.Date;
+import java.util.List;
 import java.util.Objects;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
 
 import lombok.Data;
 
 @Entity
 @Data
+@Table
 public class Movie {
 
 	@Id
@@ -19,16 +25,21 @@ public class Movie {
 	private long movieId;
 	private String title;
 	private Date releaseDate;
+	
+	@OneToMany(cascade = CascadeType.ALL)
+	@JoinColumn(name="fk_movieId", referencedColumnName="movieId")
+	private List<ShowCycle> showCycles;
 
 	public Movie() {
 		super();
 	}
 
-	public Movie(long movieId, String title, Date releaseDate) {
+	public Movie(long movieId, String title, Date releaseDate, List<ShowCycle> showCycles) {
 		super();
 		this.movieId = movieId;
 		this.title = title;
 		this.releaseDate = releaseDate;
+		this.showCycles = showCycles;
 	}
 
 	public long getMovieId() {
@@ -55,9 +66,17 @@ public class Movie {
 		this.releaseDate = releaseDate;
 	}
 
+	public List<ShowCycle> getShowCycles() {
+		return showCycles;
+	}
+
+	public void setShowCycles(List<ShowCycle> showCycles) {
+		this.showCycles = showCycles;
+	}
+
 	@Override
 	public int hashCode() {
-		return Objects.hash(movieId, releaseDate, title);
+		return Objects.hash(movieId, releaseDate, showCycles, title);
 	}
 
 	@Override
@@ -70,7 +89,10 @@ public class Movie {
 			return false;
 		Movie other = (Movie) obj;
 		return movieId == other.movieId && Objects.equals(releaseDate, other.releaseDate)
-				&& Objects.equals(title, other.title);
+				&& Objects.equals(showCycles, other.showCycles) && Objects.equals(title, other.title);
 	}
+	
+	
 
+	
 }

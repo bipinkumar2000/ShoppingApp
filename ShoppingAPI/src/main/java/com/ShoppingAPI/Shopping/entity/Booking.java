@@ -1,40 +1,65 @@
 package com.ShoppingAPI.Shopping.entity;
 
+
 import java.util.Objects;
 
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToOne;
+import javax.persistence.Table;
+import javax.validation.constraints.NotBlank;
 
 import lombok.Data;
 
-@Entity
 @Data
+@Entity
+@Table
 public class Booking {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private long bookingId;
+	
+	@NotBlank(message="Movie title must not be blank")
+	@Column(name="movieTitle")
 	private String movieTitle;
+	
+	@NotBlank(message="No of tickets needed must not be blank")
+	@Column(name="noOfPersons")
 	private int noOfPersons;
-	private long userId;
-	private String showCycle;
+	
+	
+	@OneToOne(cascade = CascadeType.ALL)
+	@JoinColumn(name="fk_showcycleId")
+	private ShowCycle showCycle;
+	
+	
 
 	public Booking() {
 		super();
 	}
 
-	public Booking(long bookingId, String movieTitle, int noOfPersons, long userId, String showCycle) {
+	public Booking(long bookingId, @NotBlank(message = "Movie title must not be blank") String movieTitle,
+			@NotBlank(message = "No of tickets needed must not be blank") int noOfPersons, ShowCycle showCycle,
+			UserDetails user) {
 		super();
 		this.bookingId = bookingId;
 		this.movieTitle = movieTitle;
 		this.noOfPersons = noOfPersons;
-		this.userId = userId;
 		this.showCycle = showCycle;
+		
 	}
 
 	public long getBookingId() {
 		return bookingId;
+	}
+
+	public void setBookingId(long bookingId) {
+		this.bookingId = bookingId;
 	}
 
 	public String getMovieTitle() {
@@ -53,21 +78,18 @@ public class Booking {
 		this.noOfPersons = noOfPersons;
 	}
 
-	public long getUserId() {
-		return userId;
-	}
-
-	public String getShowCycle() {
+	public ShowCycle getShowCycle() {
 		return showCycle;
 	}
 
-	public void setShowCycle(String showCycle) {
+	public void setShowCycle(ShowCycle showCycle) {
 		this.showCycle = showCycle;
 	}
 
+	
 	@Override
 	public int hashCode() {
-		return Objects.hash(bookingId, movieTitle, noOfPersons, showCycle, userId);
+		return Objects.hash(bookingId, movieTitle, noOfPersons, showCycle);
 	}
 
 	@Override
@@ -80,8 +102,10 @@ public class Booking {
 			return false;
 		Booking other = (Booking) obj;
 		return bookingId == other.bookingId && Objects.equals(movieTitle, other.movieTitle)
-				&& noOfPersons == other.noOfPersons && Objects.equals(showCycle, other.showCycle)
-				&& userId == other.userId;
+				&& noOfPersons == other.noOfPersons && Objects.equals(showCycle, other.showCycle);
 	}
 
+	
+
+	
 }

@@ -13,7 +13,9 @@ import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.ShoppingAPI.Shopping.dao.BookingDao;
+import com.ShoppingAPI.Shopping.dao.UserDao;
 import com.ShoppingAPI.Shopping.entity.Booking;
+import com.ShoppingAPI.Shopping.entity.UserDetails;
 import com.ShoppingAPI.Shopping.service.BookingService;
 
 @Service
@@ -22,6 +24,7 @@ public class BookingServiceImpl implements BookingService {
 	
 	@Autowired
 	private BookingDao bookingDao;
+	
 
 	@Override
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly=false)
@@ -43,11 +46,11 @@ public class BookingServiceImpl implements BookingService {
 	@Override
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly=false)
 	@Cacheable(value="moviesbooking",key="#userId")
-	public ResponseEntity<List<Booking>> getBookings(long userId) {
-		if(userId>0) {
-			var booking = bookingDao.findAll(userId);
-			if(booking!=null) {
-				return new ResponseEntity<List<Booking>>(booking,HttpStatus.OK);
+	public ResponseEntity<List<Booking>> getBookings(UserDetails user) {
+		if(user!=null) {
+			List<Booking> bookings=user.getBookings();
+			if(bookings!=null) {
+				return new ResponseEntity<List<Booking>>(bookings,HttpStatus.OK);
 			}
 			else {
 				return new ResponseEntity<List<Booking>>(HttpStatus.NOT_FOUND);
@@ -85,7 +88,7 @@ public class BookingServiceImpl implements BookingService {
 	@CachePut(value="moviesbooking",key="#booking.bookingId")
 	public ResponseEntity<Boolean> updateBooking(Booking booking) {
 		if(booking!=null) {
-			var id = booking.getUserId();
+			var id = booking.getBookingId();
 			var _booking = bookingDao.findById(id);
 			if(_booking!=null) {
 				try {
